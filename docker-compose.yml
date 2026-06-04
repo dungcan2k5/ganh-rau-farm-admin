@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ganh-rau-admin:
+    image: dungcan2k5/ganh-rau-farm-admin:latest
+    container_name: ganh-rau-admin
+    restart: always
+    expose:
+      - "80"
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-ganh-rau-admin
+    restart: always
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    depends_on:
+      - ganh-rau-admin
