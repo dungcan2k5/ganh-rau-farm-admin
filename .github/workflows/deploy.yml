@@ -28,8 +28,6 @@ jobs:
         context: .
         push: true
         tags: dungcan2k5/ganh-rau-farm-admin:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
 
   deploy-to-vps:
     needs: build-and-push
