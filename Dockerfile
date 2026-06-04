@@ -12,8 +12,15 @@ COPY package.json pnpm-lock.yaml* .npmrc* ./
 # Install dependencies
 RUN pnpm i --frozen-lockfile
 
-# Copy codebase and build app
+# Copy codebase
 COPY . .
+
+# Declare build arguments and set env variables
+ARG VITE_API_URL
+ARG VITE_SUPABASE_API_KEY
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_SUPABASE_API_KEY=$VITE_SUPABASE_API_KEY
+
 RUN pnpm build
 
 # Stage 2: Serve stage
