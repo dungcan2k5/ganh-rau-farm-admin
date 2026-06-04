@@ -12,7 +12,6 @@ services:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared-ganh-rau-admin
     restart: always
-    command: tunnel run
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     depends_on:
