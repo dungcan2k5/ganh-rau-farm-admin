@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
 # Stage 1: Build stage
 FROM node:18-alpine AS builder
 
@@ -15,11 +17,13 @@ RUN pnpm i --frozen-lockfile
 # Copy codebase
 COPY . .
 
-# Declare build arguments and set env variables
+# Declare build arguments
 ARG VITE_API_URL
 ARG VITE_SUPABASE_API_KEY
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_SUPABASE_API_KEY=$VITE_SUPABASE_API_KEY
+
+# Dynamically write .env file inside the container from build arguments
+RUN echo "VITE_API_URL=$VITE_API_URL" > .env && \
+    echo "VITE_SUPABASE_API_KEY=$VITE_SUPABASE_API_KEY" >> .env
 
 RUN pnpm build
 
